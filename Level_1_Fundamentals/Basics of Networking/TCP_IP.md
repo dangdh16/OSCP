@@ -4,8 +4,6 @@ ARP, and many others.
 
 **Layer 4** : Tầng giao vận, là dịch vụ giữa tầng mạng và tầng ứng dụng, cung cấp các tiến trình thường sử dụng giao thức TCP và UDP. Các gói tin TCP/UDP bao gồm các port nguồn và port đích nhằm xác định đích gửi nhận của gói tin. Các message được phân mảnh khi gửi TCP và datagram khi gửi UDP (IP datagram là đơn vị truyền dữ liệu được đánh địa chỉ gửi nhận ở trong Header). 
 
- UDP được biết đến 
-
 ![](img/2021-08-21-15-11-54.png)
 > Các gói tin tầng 4 bao gồm payload và Header
 ## **TCP**
