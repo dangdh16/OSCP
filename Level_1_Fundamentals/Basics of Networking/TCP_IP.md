@@ -83,7 +83,7 @@ Khi một ứng dụng sử dụng UDP, các gói tin chỉ được gửi đế
 
 
 # Advance TCP :
-:v advance hơn 1 tý thui hehe. ._. cũng ko advance lắm đọc trong - Mạng máy tính Hồ Đắc Phương
+:v advance hơn 1 tý thui hehe. ._. cũng ko advance 
 ## TCP congestion avoidance (Kiểm sóat tắc nghẽn)
 Kiểm soát luồng :
 Các bên có cửa sổ kiểm soát :
