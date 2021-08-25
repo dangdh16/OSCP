@@ -60,7 +60,8 @@ Và thế là connection được established. Các gói sau đó sẽ gửi dat
 
 ```
 Note: ISN (Initial Sequence Number) : là cái số Seq mà cờ SYN đầu tiên gửi đấy bro. Hiểu là được random tuy nhiên nó có cách tính đặc biệt dựa vào đồng hồ của os.
-Và vì sao lại cộng 1 vào ACK. vì là số Seq sẽ tăng lên bằng số bits mỗi segments nhận. Ví dụ : A gửi đến B gói tin 725 bits. thì ở Step 2 ACK sẽ là : 93..58 + 725 = 93..84. Và B mong là gói tiếp theo sẽ nhận được số Seq = 93..84
+Và vì sao lại cộng 1 vào ACK. vì là số Seq sẽ tăng lên bằng số bits mỗi segments nhận. 
+Ví dụ : A gửi đến B gói tin 725 bits. thì ở Step 2 ACK sẽ là : 93..58 + 725 = 93..84. Và B mong là gói tiếp theo sẽ nhận được số Seq = 93..84
 ```
 ## **UDP** (User datagram Protocol)
 
@@ -160,7 +161,7 @@ Vào phần chính :D : Congestion control thường có 2 dạng :
 - Chuyển qua Congestion avoidance
 - Khi triple ACK => Fast Retransmit : giảm cwnd = 1 => bắt đầu slowstart lại 
 
-**Thụât toán TCP Reno** : Gồm Slowstart, Congestion avoidance, Fast retransmit
+**Thụât toán TCP Reno** : Gồm Slowstart, Congestion avoidance, Fast recovery
 - Slowstart đến khi xảy ra timeout
 - Chuyển qua Congestion avoidance
 - Khi triple ACK => Fast Recovery : 
@@ -172,7 +173,8 @@ Vào phần chính :D : Congestion control thường có 2 dạng :
 > Tahoe and Reno
 
 ```
-Nhận xét thì thụât toán Reno gíúp làm tăng số lượng gói được gửi đi nhanh hơn so với Tahoe. khi mà gặp triple ACK thì cwnd chỉ giảm 1 nửa trong khi tahoe cwnd phải giảm về 1.
+Nhận xét thì thụât toán Reno gíúp làm tăng số lượng gói được gửi đi nhanh hơn so với Tahoe. 
+Khi mà gặp triple ACK thì cwnd chỉ giảm 1 nửa trong khi tahoe cwnd phải giảm về 1.
 ```
 
 --- 
