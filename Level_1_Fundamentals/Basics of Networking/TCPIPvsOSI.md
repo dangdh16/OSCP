@@ -45,7 +45,7 @@ Dữ liệu ở tầng này được gọi là `payload`. Các thiết bị giao
 + Layer 1 : `bits` 
 
 ![](img/2021-08-25-01-24-51.png)
-> Nhìn vào đường màu đỏ để thấy đường đi của dữ liệu (Phần switch và router chính là phần của cái "web server" trong ảnh tách ra để ta hiểu rõ phần frame đi lên packet như thế nào, từ switch đến router như thế nào => đó là quá trình `decapsulation`)
+> Nhìn vào đường màu đỏ để thấy đường đi của dữ liệu.
 
 ### 2.2 TCP/IP
 
@@ -64,3 +64,37 @@ Về TCP/IP thì cơ bản là giống các chức năng của OSI, chỉ là n�
 Thì khác biệt chỉ có bên trên, 1 mô hình được phân tích để nghiên cứu học tập hiểu quá trình OSI, 1 mô hình được sử dụng trong thực tế. Có thể hiểu là OST là mô hình rườm rà hơn TCP/IP, qua từng các lớp thì OSI định nghĩa rõ ràng hơn TCP/IP, tuy nhiên thì mục đích của TCP/IP là oriented protocol thì việc định tuyến là quan trọng. Mặt khác nhau nổi bật nhất mình thấy là :
 
 + TCP/IP giúp thiết lập kết nối giữa các loại máy tính với nhau. Mặt khác, OSI giúp chuẩn hóa các router, switch, bo mạch chủ và các phần cứng khác rõ ràng hơn.
+
+## 3. Encapsulation & Decapsulation 
+
+### 3.1. Encapsulation
+Là quá trình thiết bị gửi dữ liệu. là quá trình các giao thức của các tầng bao dữ liệu bằng cách thêm header, trailer sao cho mỗi lần dữ liệu đến các layer đều được hiểu và xử lý thông tin tốt nhất.
+![](img/2021-08-26-22-31-51.png)
+
+Để truyền tải dữ liệu thì mỗi layer sẽ sử dụng PDU (Phần trên) 
+Quá trình đóng gói dữ liệu - Encapsulation:
+
++ Data từ Application layer chuyển xuống Transport được chia nhỏ ra thành các `segment` hoặc `datagram`, mỗi thành phần chia nhỏ ra được đánh số thứ tự (sequence number) để bên nhận có thể sắp xếp dữ liệu
++ Các `segment` được đưa xuống Network để thêm ip header mục đích là để đánh địa chỉ mạng và chỉ đường của gói tin trên mạng. `Segment` sau khi thêm Ip header được gọi là `packet`.
++ Khi `packet` xuống đến DataLink layer. Sẽ được đóng gói thành các `frame` được thêm các thông tin là LLC header và MAC header, Address (Mac là duy nhất trên mỗi thiết bị mạng). Vì trong Data link layer có 2 sublayer : Logical Link Control (LLC) and Media Access Control (MAC).
+    + LLC liên kết với Network layer để xác định địa chỉ logic là gì và đóng gói `frame` tương ứng
+    + Mac: Kết hợp với lớp cuối xác định môi trường truyền dẫn để sử dụng phương thức phù hợp
+Ví dụ: NHư với phương thức Ethernet, LLC quyết định các frame sẽ đóng gói và định địa chỉ theo chuẩn 802.3. MAC quyết định sử dụng cơ chế CSMA/CD. 
++ Để truyền đi các thông tin trên `frame` được chuyển thành mã nhị phân và truyền đi
+
+### 3.2. Decapsulation
+Là quá trình nhận dữ liệu. 
++ Sau khi nhận được các bit 0, 1 bên gửi sẽ đồng bộ, decode các tín hiệu digital thành các `frame`.
++ Khi các thiết bị xây dựng lại các `frame` sẽ dựa vào thông tin của FCS(Frame check sequence), nếu có sai sót thì sẽ hủy và đợi gửi lại. Sau khi `frame` được build xong thì sẽ được truyền lên tầng network...
+
+## 4. Application Layer Service and Protocol
+Mô hình hoạt động, các thành phần cơ bản của các service, protocol sau (DNS, FPT, MAIL, HTTP, TELNET, SSH)
+
+
+
+---
+>author : dangdh11
+
+>reference:
+
++ http://www.tcpipguide.com/free/t_DataLinkLayerLayer2.htm
