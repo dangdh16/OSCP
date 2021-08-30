@@ -123,3 +123,9 @@ Done
 
 > Reference : https://gtfobins.github.io/
 https://blog.tryhackme.com/vulnversity/
+https://github.com/3ndG4me/KaliLists/tree/master/dirb
+https://github.com/OJ/gobuster
+https://viblo.asia/p/leo-thang-dac-quyen-trong-linux-linux-privilege-escalation-1-using-suid-bit-QpmlexgrZrd
+https://hackersploit.org/netcat-tutorials/
+https://vinasupport.com/systemd-la-gi-huong-dan-tao-va-quan-ly-systemd-services-tren-linux/
+https://gtfobins.github.io/gtfobins/systemctl/
