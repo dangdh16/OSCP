@@ -6,7 +6,7 @@
 
 + TCP/IP : TCP/IP là giao thức ra đời trước Osi. là một bộ các giao thức truyền thông được sử dụng để kết nối các thiết bị mạng với nhau trên internet, mạng nội bộ. Có 4 layer 
 
-![](https://github.com/dangdh16/OSCP/blob/main/Level_1_Fundamentals/Basics%20of%20Networking/img/2021-08-25-00-14-03.png =100x20)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_1_Fundamentals/Basics%20of%20Networking/img/2021-08-25-00-14-03.png)
 
 > Tại sao phải chia thành 2 mô hình này ?
 
