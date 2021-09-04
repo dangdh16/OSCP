@@ -6,7 +6,7 @@
 
 + TCP/IP : TCP/IP là giao thức ra đời trước Osi. là một bộ các giao thức truyền thông được sử dụng để kết nối các thiết bị mạng với nhau trên internet, mạng nội bộ. Có 4 layer 
 
-![](img/2021-08-25-00-14-03.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_1_Fundamentals/Basics%20of%20Networking/img/2021-08-25-00-14-03.png)
 
 > Tại sao phải chia thành 2 mô hình này ?
 
@@ -15,7 +15,7 @@ Việc chuẩn hoá các giao thức này tuỳ thuộc vào các nhà cung cấ
 ## 2. Chức năng thành phần layer
 
 ### 2.1 OSI
-![](img/2021-08-25-00-23-37.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_1_Fundamentals/Basics%20of%20Networking/img/2021-08-25-00-23-37.png)
 
 **Layer 7 Application** : Là lớp miêu tả giao diện giữa 2 ứng dụng, nằm ở 2 thiết bị khác nhau. Các giao thức ở lớp ứng dụng như là : http, https, ftp, smtp, telnet, pop3,... Giao thức L7 được sử dụng các chưong trình gồm 2 loại :
 - Các chương trình ứng dụng cung cấp cho end-user : web browser và máy chủ sử dụng các giao thức http,https
@@ -44,7 +44,7 @@ Dữ liệu ở tầng này được gọi là `payload`. Các thiết bị giao
 + Layer 2 : `frame`
 + Layer 1 : `bits` 
 
-![](img/2021-08-25-01-24-51.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_1_Fundamentals/Basics%20of%20Networking/img/2021-08-25-01-24-51.png)
 > Nhìn vào đường màu đỏ để thấy đường đi của dữ liệu.
 
 ### 2.2 TCP/IP
@@ -69,7 +69,7 @@ Thì khác biệt chỉ có bên trên, 1 mô hình được phân tích để n
 
 ### 3.1. Encapsulation
 Là quá trình thiết bị gửi dữ liệu. là quá trình các giao thức của các tầng bao dữ liệu bằng cách thêm header, trailer sao cho mỗi lần dữ liệu đến các layer đều được hiểu và xử lý thông tin tốt nhất.
-![](img/2021-08-26-22-31-51.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_1_Fundamentals/Basics%20of%20Networking/img/2021-08-26-22-31-51.png)
 
 Để truyền tải dữ liệu thì mỗi layer sẽ sử dụng PDU (Phần trên) 
 Quá trình đóng gói dữ liệu - Encapsulation:
