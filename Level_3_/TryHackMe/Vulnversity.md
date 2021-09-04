@@ -4,7 +4,7 @@
 -.- Ấn deploy là được mà bro
 ## 2. Reconnaissance
 Thu thập thông tin về machine dùng công cụ network scanning `Nmap` 
-![](img/2021-08-31-00-19-46.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_3_/TryHackMe/img/2021-08-31-00-19-46.png)
 ```
 nmap -sV -sC 10.10.46.196
 ```
@@ -34,21 +34,21 @@ gobuster dir -u http://10.10.46.196:3333 -w /usr/share/wordlists/dirbs/common.tx
 Trong đó:
 + -u : target URL
 + -w : địa chỉ wordlist
-![](img/2021-08-31-00-35-10.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_3_/TryHackMe/img/2021-08-31-00-35-10.png)
 => kết quả là tìm được url : `/internal/` => truy cập được trang uploads file
 ## 4. Compromise the webserver
 Sử dụng burpsuite community để bắt request và tìm ra extension có thể upload được file lên, mục đích là upload được file shell lên để RCE.
 
 + Truy cập trang : http://10.10.46.196:3333/internal
-![](img/2021-08-31-00-38-55.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_3_/TryHackMe/img/2021-08-31-00-38-55.png)
 + Ấn upload file và dừng ở POST request (intercept is on):
-![](img/2021-08-31-00-40-27.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_3_/TryHackMe/img/2021-08-31-00-40-27.png)
 + Chuột phải chọn : `Intruder` (Là trang mà ta có thể bruteforce để tìm ra extension phù hợp) => `Clear$` => bôi đen phần extension của file vừa up lên => `Add$`
-![](img/2021-08-31-00-43-34.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_3_/TryHackMe/img/2021-08-31-00-43-34.png)
 + Trang Payloads : thê những extension : `.php`, `.php2`, `.php3`. `.php5`, `.phtml`
-![](img/2021-08-31-00-44-56.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_3_/TryHackMe/img/2021-08-31-00-44-56.png)
 + Start attack:
-![](img/2021-08-31-00-45-31.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_3_/TryHackMe/img/2021-08-31-00-45-31.png)
 Chú ý phần kết quả length của `phtml` khác so với phần còn lại (Do trả về chữ success nhỏ hơn chữ Extension not allowed) => có thể upload file `.phtml`
 
 Bước 1 : chuẩn bị file hehe.phtml
@@ -82,7 +82,7 @@ find / -perm -u=s -type f 2>/dev/null
 ```
 Ta được kết quả:
 
-![](img/2021-08-31-01-13-50.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_3_/TryHackMe/img/2021-08-31-01-13-50.png)
 + Và thử :
 ```
 passwd bill
@@ -116,7 +116,7 @@ systemctl start hehe.service
 ```
 cat /root/root.txt
 ```
-![](img/2021-08-31-01-24-08.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_3_/TryHackMe/img/2021-08-31-01-24-08.png)
 
 Done
 
