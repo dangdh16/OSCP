@@ -4,7 +4,7 @@ ARP, and many others.
 
 **Layer 4** : Tầng giao vận, là dịch vụ giữa tầng mạng và tầng ứng dụng, cung cấp các tiến trình thường sử dụng giao thức TCP và UDP. Các gói tin TCP/UDP bao gồm các port nguồn và port đích nhằm xác định đích gửi nhận của gói tin. Các message được phân mảnh khi gửi TCP và datagram khi gửi UDP (IP datagram là đơn vị truyền dữ liệu được đánh địa chỉ gửi nhận ở trong Header). 
 
-![](img/2021-08-21-15-11-54.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_1_Fundamentals/Basics%20of%20Networking/img/2021-08-21-15-11-54.png)
 > Các gói tin tầng 4 bao gồm payload và Header
 ## **TCP**
 là giao thức hoạt động trong tầng giao vận của mô hình OSI.
@@ -16,7 +16,7 @@ TCP còn được được biết đến là giao thức truyền tin cậy, có
 - *Flow control*: Ví dụ : thằng bạn của bạn nói quá nhanh và bạn phải kiểu "wait wait, tao chưa nghe rõ, you talk to quick, so make me mất mát 'gói tin'?". Do đó TCP cần sự kiểm soát quá trình truyền nhận. Ví dụ: máy gửi gửi 4000byte, và máy nhận sẽ được nhận từ từ 1500byte/lần và gửi lại cờ ACK cho máy gửi nếu nhận thành công.
 
 Một gói tin TCP không thể gửi trong 1 lần vì vậy ngta buộc phải phân mảnh thành các TCP segments. Các segments này sau khi lên tầng application sẽ được đóng gói (encapsulate) thành IP packet:
-![](img/2021-08-21-17-53-07.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_1_Fundamentals/Basics%20of%20Networking/img/2021-08-21-17-53-07.png)
 > TCP segments - Data ở dưới cùng không thuộc TCP header
 
 | Field | Length| Function | 
@@ -34,7 +34,7 @@ Một gói tin TCP không thể gửi trong 1 lần vì vậy ngta buộc phải
 | Padding| variable  | Đảm bảo ràng size của TCP header là bội số của 32 bits |
 
 **TCP bắt tay 3 bước**
-![](img/2021-08-21-18-16-50.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_1_Fundamentals/Basics%20of%20Networking/img/2021-08-21-18-16-50.png)
 > Cơ chế bắt tay 3 bước 
 
 Đầu tiên khi ta gõ vào trình duyệt là http://xgoogle.com 
@@ -71,7 +71,7 @@ là giao thức truyền không đáng tin cậy. Vì nó không có quá trình
 - Không đảm bảo truyền dữ liệu. Cứ truyền thôi có đến đích hay không thì kệ.
 - Nhanh và hiệu quả hơn đối với các dữ liệu có kích thước nhỏ và yêu cầu khắt khe về thời gian.
 
-![](img/2021-08-21-18-54-41.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_1_Fundamentals/Basics%20of%20Networking/img/2021-08-21-18-54-41.png)
 > A UDP datagram
 
 - Length : cho biết chiều dài của toàn bộ UDP datagram tổng cộng bao nhiêu byte.(16 bit thì sẽ có tổng cộng 2^16 byte = 65536 giá trị (từ 0 -> 65535 byte))
@@ -120,7 +120,7 @@ Hướng tiếp cận : Bên gửi sẽ tăng tốc độ truyền lên (tăng k
 
 - ADditive Increase (Tăng theo cấp số cộng): tăng cwnd lên 1 Mss sau mỗi RTT cho đến khi mất gói xảy ra.
 - Multiplicative Decrease (Giảm theo cấp số nhân): giảm 1 nửa cwnd sau mỗi lần xảy ra mấy gói. 
-![](img/2021-08-21-22-13-33.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_1_Fundamentals/Basics%20of%20Networking/img/2021-08-21-22-13-33.png)
 > Đồ thị cwnd trong qúa trình AIMD
 
 Bên gửi sẽ giới hạn truyền tải bằng cách :
@@ -136,7 +136,7 @@ Vào phần chính :D : Congestion control thường có 2 dạng :
 - Network - assited congestion control : Router cung cấp bit cho sender host yêu cầu host ngừng đẩy dữ liệu, rate (là cái rate bên trên đó :D ) gửi tới các host.
 
 ### **Congestion control thực hiện với các cơ chế :** 
-![](img/2021-08-21-23-57-34.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_1_Fundamentals/Basics%20of%20Networking/img/2021-08-21-23-57-34.png)
 
 - **Slowstart** : Ban đầu sẽ gửi đi 1 datagram thiết lập cwnd =1, khi nhận được ACK thì tăng lên 2, và sau đó tăng theo hàm mũ 2. VD : 2, 4, 8, 16...
     - Đến khi xảy ra mất gói tin : sẽ set ssthresh = cwnd/2, cwnd = 1, cwnd lại tăng theo slowstart.
@@ -151,7 +151,7 @@ Vào phần chính :D : Congestion control thường có 2 dạng :
     - Truyền lại 3 gói tin đã mất khi có triple ACK
     - Khi nhận được ACK của gói bị mất -> chuyển sang congestion avoidance. Sau đó nếu timeout thì quay lại slowstart.
 
-![](img/2021-08-22-00-25-53.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_1_Fundamentals/Basics%20of%20Networking/img/2021-08-22-00-25-53.png)
 > Slowstart and Congestion avoidance
 
 ### **Tahoe and Reno**
@@ -169,7 +169,7 @@ Vào phần chính :D : Congestion control thường có 2 dạng :
     - ssthresh = cwnd
     - Truyền lại gói đã mất và congestion avoidance
 
-![](img/2021-08-22-00-30-48.png)
+![](https://github.com/dangdh16/OSCP/blob/main/Level_1_Fundamentals/Basics%20of%20Networking/img/2021-08-22-00-30-48.png)
 > Tahoe and Reno
 
 ```
