@@ -121,8 +121,6 @@ cat /root/root.txt
 Done
 
 --- 
-> Author : dangdh11
-
 > Reference :
 > 
 Reverse shell : https://www.netsparker.com/blog/web-security/understanding-reverse-shells/
