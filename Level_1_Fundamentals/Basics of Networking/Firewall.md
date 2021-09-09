@@ -68,6 +68,6 @@ Ví dụ: table filter có INPUT chain, và chain INPUT có rule là chỉ đị
 ```
 ![](img/2021-09-05-01-38-01.png)
 ## 5. Cách triển khai firewall trong thực tế
-
+()
 
 ## 6. Thực hành với iptables
