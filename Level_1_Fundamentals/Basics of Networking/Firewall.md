@@ -67,7 +67,8 @@ Tóm lại ta sẽ hiểu là: Mỗi table có nhiều chain, mỗi chain có nh
 Ví dụ: table filter có INPUT chain, và chain INPUT có rule là chỉ địa chỉ 1.2.3.4 mới được qua. và target là ACCEPT.
 ```
 ![](img/2021-09-05-01-38-01.png)
-## 5. Cách triển khai firewall trong thực tế
-()
+## 5. Các loại firewall
+- IP6Tables: dùng để hạn chế các địa chỉ IPv6. ipv4 và ipv6 được lưu giữ ở các table khác nhau. do đó cần bộ rule riêng khi mà ipv6 đưọc enable. Lệnh tuơng tự như iptables
+- NFTables: triển khai với các cú pháp dễ đọc hơn, hỗ trợ cả ipv4 và ipv6 cùng lúc. Mới triển khai trên các phiên bản linux mới.
 
-## 6. Thực hành với iptables
+## 6. Các case với iptables
