@@ -81,7 +81,7 @@ iptables -t nat -L
 - -L list rule
 - t table nào. Ví dụ: nat, mangle, raw, security. default alf filter
 Xóa rule
-![](2021-09-12-15-35-28.png)
+![](img/2021-09-12-15-35-28.png)
 ```
 iptables -n --list <name_chain> --line-numbers
 iptables -D <name_chain>  1
