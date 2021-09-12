@@ -58,7 +58,7 @@ Hành động áp dụng cho các gói tin được gọi là `target`.
 
 - RETURN: Dừng thực thi xử áp dụng rules tiếp theo trong chain hiện tại đối với gói tin. Việc kiểm soát sẽ được trả về đối với chain đang gọi.
 
-- REJECT: Thực hiện loại bỏ gói tin và gửi lại gói tin phản hồi thông báo lỗi. Ví dụ: 1 bản tin “connection reset” đối với gói TCP hoặc bản tin “destination host unreachable” đối với gói UDP và ICMP.
+- REJECT: Thực hiện loại bỏ gói tin và gửi lại gói tin phản hồi thông báo lỗi. Ví dụ: 1 bản tin “connection reset” đối với gói TCP hoặc bản tin “destination host unreachable” đối với gói UDP và ICMP. Sử dụng trong những trường hợp mình chặn họ nhưng mà mình muốn báo cho họ là t đang chặn đấy.
 
 - LOG: Chấp nhận gói tin và có ghi lại log.
 
@@ -72,3 +72,142 @@ Ví dụ: table filter có INPUT chain, và chain INPUT có rule là chỉ đị
 - NFTables: triển khai với các cú pháp dễ đọc hơn, hỗ trợ cả ipv4 và ipv6 cùng lúc. Mới triển khai trên các phiên bản linux mới.
 
 ## 6. Các case với iptables
+
+**List các rule và xóa rule**
+```
+iptables -L -v --line-numbers
+iptables -t nat -L
+```
+- -L list rule
+- t table nào. Ví dụ: nat, mangle, raw, security. default alf filter
+Xóa rule
+![](2021-09-12-15-35-28.png)
+```
+iptables -n --list <name_chain> --line-numbers
+iptables -D <name_chain>  1
+```
+- name_chain : ví dụ INPUT
+- 1 : số num
+
+**Thay đổi policy của Chain:**
+```
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP
+iptables -P FORWARD DROP
+```
+Để chặn các packet khi không match với rule nào. -P : policy
+
+**Thêm xóa rule: Allow packet local interface:**
+```
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+
+iptables -D INPUT -i lo -j ACCEPT
+iptables -D OUTPUT -o lo -j ACCEPT
+
+iptables -F INPUT
+iptables -F 
+```
+- -A append  rule vào cuối chain, -D delete rule ở đầu chain, -F: Flush  toàn bộ rule của chain.
+- -i: interface. VD : eth0, lo- loopback,...
+- -o: output interface
+- -j: jump to target . ví dụ ACCEPT, DROP, REJECT
+
+**Enable DNS, DHCP:**
+```
+iptables -A INPUT -p udp --dport 67 -j ACCEPT
+iptables -A INPUT -p tcp --dport 67 -j ACCEPT
+iptables -A OUTPUT -p udp --dport 53 -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 53 -j ACCEPT
+iptables -A OUTPUT -p udp --dport 68 -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 68 -j ACCEPT
+```
++ Các port dịch vụ : https://cuongquach.com/download/pdf/sys/common_service_ports.pdf
++ -p: protocol giao thức cho dns, dhcp là udp, packet lớn hơn thì tcp.
++ –dport destination port, -sport source port
+
+**Enable SSH**
+
+*Client*:
+```
+iptables -A OUTPUT -p tcp --dport 22 -j ACCEPT
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+```
+- -m match : may load extension
+- Tức là accept gửi đến port 22 của server. và accept nhận về các state ESTABLISHED,RELATED từ server.
+
+*Server*
+```
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+```
+
+**Cho phép ping đến máy khác chứ không cho bọn ló ping mình**
+```
+iptables -t mangle -A PREROUTING -p icmp -j DROP
+iptables -A OUTPUT -p icmp -j ACCEPT
+```
+
+**Theo dõi những packet bị chặn bằng LOG**
+
+```
+iptables -N LOG_dangdh11
+iptables -A LOG_dangdh11 -j LOG --log-level error --log-prefix "iptables droped: "
+iptables -A LOG_dangdh11 -j DROP
+
+
+iptables -A INPUT -j LOG_dangdh11
+iptables -A OUTPUT -j LOG_dangdh11
+```
+(LOG_dangdh11: để ghi nhớ là có thể tạo tên mới tùy theo mục đích)
+Thực chất là bạn có thể hiểu theo cách là : tạo hàm và gọi hàm.
+- -N new chain, -X delete chain
+- dòng 2-3: define ghi log và drop packet. Kiểu như là định nghĩa các chức năng trong hàm.
+- dòng 4-5: add 2 chain INPUT và OUTPUT refrence đến LOG_dangdh11, ở đây sẽ define các rule để ghi lại log. Giống như việc gọi hàm
+
+`* P/S: KHác biệt giữ DROP và REJECT: DROP thì người gửi sẽ ko biết gì, còn REJECT người gửi sẽ như là được thông báo 'connection reset by peer'.`
+
+Các case khác:
+**Limit ccu per ip**
+```
+iptables -A INPUT -p tcp -m connlimit --connlimit-above 100 -j REJECT --reject-with tcp-reset
+```
+**Limit cps per ip**
+```
+iptables -A INPUT -p tcp -m conntrack --ctstate NEW -m limit --limit 60/s --limit-burst 20 -j ACCEPT
+iptables -A INPUT -p tcp -m conntrack --ctstate NEW -j DROP
+```
+**Port scanning**
+```
+iptables -N port_scanning
+iptables -A port_scanning -p tcp --tcp-flags SYN,ACK,FIN,RST RST -m limit --limit 1/s --limit-burst 2 -j RETURN
+iptables -A port_scanning -j DROP
+
+iptable -A INPUT -j port_scanning
+```
+**Chặn ip theo Geolocation**
+```
+iptables -A droplist -i eth1 -s 1.2.3.0/24 -j LOG --log-prefix "Block IP GeoIP  "
+iptables -A droplist -i eth1 -s 1.2.3.0/24 -j DROP
+```
+Đại khái ý tưởng là chuẩn bị những file về dải ip quốc tế (VD: db ip maxmind):
+Và chuẩn bị filebash để block
+```
+_input=/path/to/text.txt
+iptables -N block_geoip
+
+while read -r ip
+do
+	iptables -A block_geoip -i eth1 -s $ip -j LOG --log-prefix "Block IP GeoIP "
+	iptables -A block_geoip -i eth1 -s $ip -j DROP
+done < "$_input"
+
+iptables -I INPUT -j block_geoip
+iptables -I OUTPUT -j block_geoip
+iptables -I FORWARD -j block_geoip
+```
+
+## 7. Cách triển khai iptables trong thực tế
++ Viết thành script, bashshell theo mỗi trường hợp sẽ enable những chain mà mình đã chuẩn bị sẵn để xử lý tấn công, sự cố khi mà các rule L7 không chặn được.
+
+Updating...
